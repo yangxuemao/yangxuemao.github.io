@@ -1,0 +1,61 @@
+前端知识点总结
+1. CSS3  animation 动画
+应用场景：CSS3 Loading 实现
+
+2. touchStart/touchEnd 事件
+绑定触摸事件
+
+
+3.节流（throttle）和防抖（debounce）
+https://segmentfault.com/a/1190000017229182?utm_source=weekly&utm_medium=email&utm_campaign=email_weekly
+
+1)函数节流：一个函数执行一次后，只有大于设定的执行周期后才会执行第二次。
+
+函数节流的应用场景
+需要间隔一定时间触发回调来控制函数调用频率：
+
+DOM 元素的拖拽功能实现（mousemove）
+搜索联想（keyup）
+计算鼠标移动的距离（mousemove）
+Canvas 模拟画板功能（mousemove）
+射击游戏的 mousedown/keydown 事件（单位时间只能发射一颗子弹）
+监听滚动事件判断是否到页面底部自动加载更多：给 scroll 加了 debounce 后，只有用户停止滚动后，才会判断是否到了页面底部；如果是 throttle 的话，只要页面滚动就会间隔一段时间判断一次
+
+2)防抖函数：一个需要频繁触发的函数，在规定时间内，只让最后一次生效，前面的不生效。
+
+函数防抖的应用场景
+对于连续的事件响应我们只需要执行一次回调：
+
+每次 resize/scroll 触发统计事件
+文本输入的验证（连续输入文字后发送 AJAX 请求进行验证，验证一次就好）
+
+typeof 有7种类型（undefined number string boolean symbol object function），笔者都验证了一遍：更加验证了相同点第一点，严格模式下，函数的this值就是call和apply的第一个参数thisArg，非严格模式下，thisArg值被指定为 null 或 undefined 时this值会自动替换为指向全局对象，原始值则会被自动包装，也就是new Object()。
+
+1.文件下载的方式
+2.兼容性问题：Firefox 中无法使用 js 模拟触发 a 标签的 click 事件，解决办法：
+使用 document.append(a)
+
+必备知识点：
+1.手写 Ajax
+2.手写 Promise
+3.手写 ParseURL
+4.模拟 Call，Apply 函数
+5.手写算法
+6.手写拖动事件实现左右滑
+7.Vue生命周期
+8.常用正则表达式
+
+
+
+技术生涯关键字：
+开发环境
+代码风格
+开发流程
+最佳实践
+
+设计模式
+语言标准
+代码规范
+内核原理
+算法优化
+
