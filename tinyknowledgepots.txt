@@ -1,4 +1,4 @@
-前端知识点总结
+﻿前端知识点总结
 1. CSS3  animation 动画
 应用场景：CSS3 Loading 实现
 
@@ -58,4 +58,52 @@ typeof 有7种类型（undefined number string boolean symbol object function）
 代码规范
 内核原理
 算法优化
+
+知识点：
+css 溢出 overflow
+值: visible | hidden | scroll | auto | inherit
+初始值: visible
+应用于: 块级元素、替换元素、表单元格
+[注意]如果overflow-x和overflow-y值相同则等同于overflow。如果overflow-x和overflow-y值不同，且其中一个值为visible，而另外一个值是非visible的值。则visible值会被重置为auto。
+
+应用：
+1.清除浮动影响
+[注意]IE6-浏览器使用overflow这种方式并不能清除浮动，常用的消除浮动的方法是
+.clear{
+    *zoom: 1;
+}
+.clear:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+2.避免margin穿透
+3.两栏自适应布局
+[注意]使用overflow属性的场景限制比较明显，常用的两栏自适应布局的方法:
+.cell{
+    display: table-cell; width: 2000px;
+    *display: inline-block; *width:auto;
+}
+4.选项卡
+overflow选项卡主要用于单页应用
+
+
+BFC 
+BFC是block formatting context，也就是块级格式化上下文，是用于布局块级盒子的一块渲染区域
+满足下列条件之一就可触发BFC
+
+　　【1】根元素，即HTML元素
+
+　　【2】float的值不为none
+
+　　【3】overflow的值不为visible
+
+　　【4】display的值为inline-block、table-cell、table-caption
+
+　　【5】position的值为absolute或fixed
+
+作用
+【1】可以阻止元素被浮动元素覆盖
+【2】可以包含浮动元素
+【3】属于同一个BFC的两个相邻块级子元素的上下margin会发生重叠
 
