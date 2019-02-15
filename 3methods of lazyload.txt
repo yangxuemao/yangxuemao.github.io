@@ -1,0 +1,4 @@
+img有两种方式实现懒加载：
+1.事件监听(scroll、resize、orientationChange)
+2.Intersection Observer
+3.渐进式懒加载（graceful degrade）
