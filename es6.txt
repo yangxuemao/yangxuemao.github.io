@@ -426,7 +426,7 @@ let {proxy, revoke} = Proxy.revocable(target, handler)
 Reflect对象一共有 13 个静态方法。
 
 Reflect.apply(target, thisArg, args)
-等同于Function.prototype.apply.call(func, thisArg, args)，用于绑定this对象后执行给定函数。
+等同于Function.prototype.apply.call(target, thisArg, args)，用于绑定this对象后执行给定函数。
 
 Reflect.construct(target, args)
 等同于new target(...args)，这提供了一种不使用new，来调用构造函数的方法。
