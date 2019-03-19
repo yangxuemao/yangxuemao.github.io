@@ -331,7 +331,7 @@
 
    Promise 对象的特点：
 
-   （1）对象的状态不受外界影响。Promise对象代表一个异步操作，有三种状态：pending（进行中）、fulfilled（已成功）和rejected（已失败）。
+   （1）对象的状态不受外界影响。Promise对象代表一个异步操作，有三种状态：pending（进行中）、fulfilled（已成功）和 rejected（已失败）。
 
    （2）一旦状态改变，就不会再变，任何时候都可以得到这个结果。
 
@@ -398,6 +398,10 @@
 4. Sizzle 引擎的实现原理？
 
 5. 事件绑定和事件循环？
+
+6. 用过 $.Deferred()  吗？
+
+   
 
 ### 浏览器
 
@@ -602,6 +606,117 @@
 7. 如何使用Vuex进行跨组件状态管理
 
    服务端渲染（如Vue SSR），首屏直出当然是最理想的方案。
+
+8. 如何实现 MVVM？
+
+   答：Vue 三要素：
+
+   - **响应式**：Vue 如何监听到 data 的每个属性的变化；
+
+   - **模板引擎**：Vue 的模板如何被解析，指令如何处理；
+
+   - **渲染**：Vue 的模板如何渲染成 HTML，以及渲染过程。
+
+   **什么是响应式**
+
+   Object.DefineProperty()
+
+   **Vue 如何解析模板**
+
+   模板的本质是字符串，但最终要转换成 js ，因为模板中有逻辑指令。因此，模板最终会转换为 render 函数，所有信息都包含在 render 函数中。
+
+   [render] 函数主要使用 [with] 语法实现。
+
+   ```javascript
+   with(this){   // this：vm
+       return _c(
+       'div',
+       {
+           attrs:{"id","app"}
+       },
+       [
+           _c('p',[_v(_s(price))])
+       ])
+   }
+   //vm._c
+   ƒ (a, b, c, d) { return createElement(vm, a, b, c, d, false); }
+   
+   //vm._v
+   ƒ createTextVNode (val) {
+     return new VNode(undefined, undefined, undefined, String(val))
+   }
+   
+   //vm._s
+   ƒ toString (val) {
+     return val == null? '': typeof val === 'object'? JSON.stringify(val, null,2): String(val)
+   }
+   funciton updateComponent() {
+       //vm._render即上面的render函数，返回vnode
+       vm._update(vm._render())
+   }
+   ```
+
+   render 函数执行之后返回的是 vnode 。
+
+   vm.\_update()、updateComponent 
+
+   - `updateComponent`中实现了`vdom`的`patch`
+
+   - 页面首次渲染执行`updateComponent`
+
+   - `data` 中每次修改属性，执行`updataCommponent`
+
+   **Vue 的实现流程**
+
+   > 第一步，解析模板成 render 函数  
+
+   - with的用法
+
+   - 模板中所有的信息都被`render`函数包含
+
+   - 模板中用到的`data`中的属性，都变成了js变量
+
+   - 模板中的`v-model`、`v-if`、`v-on`都变成了js逻辑
+
+   - render函数返回vnode化 
+
+   > 第二步，响应式监听
+
+   - Object.defineProperty
+
+   - 将 data 属性代理到 vm 上
+
+   > 第三步：首次渲染，显示页面，且绑定依赖
+
+   - 初次渲染，执行 updateaComponent，执行 vm._render()
+
+   - 执行 render 函数，会访问到 vm.list 和 vm.title
+
+   - 会被响应式的 get 方法监听到(为什么监听get？直接监听set不就行了吗？)
+
+   - data 中有很多属性，有些会被用到，有些可能不会被用到
+
+   - 被用到的会走到 get ，不被用到的不会走 get
+
+   - 未走到 get 中的属性，set 的时候我们也无需关系
+
+   - 避免不必要的重复渲染
+
+   - 执行updateComponent，会走到 vdom 的 patch 方法
+
+   -  patch 将 vnode 渲染成 DOM，初次渲染完成
+
+   > data 属性变化，触发 rerender
+
+   - 属性修改，被响应式的 set 监听到
+
+   - set 中执行 updateComponent 
+
+   - updateComponent 重新执行 vm.\_render()
+
+   - 生成的 vnode 和 pervNode ， 通过 patch 进行对比
+
+   - 渲染到 html 中
 
 ### 前端工程化
 
