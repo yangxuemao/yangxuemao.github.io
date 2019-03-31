@@ -12,7 +12,7 @@
 
    # 
 
-2.  H5的新特性有哪些？移除了哪些？如何与 HTML 区分？
+2. H5的新特性有哪些？移除了哪些？如何与 HTML 区分？
 
    答：
 
@@ -115,6 +115,7 @@
    BFC是block formatting context，也就是块级格式化上下文，是用于布局块级盒子的一块渲染区域
 
    满足下列条件之一就可触发BFC
+
    - 根元素，即HTML元素
 
    - float的值不为none
@@ -132,6 +133,7 @@
    - 可以包含浮动元素
 
    - 属于同一个BFC的两个相邻块级子元素的上下margin会发生重叠
+
 6. 浏览器是怎样解析CSS选择器的？
 
    答：样式系统从关键选择器开始匹配，然后左移查找规则选择器的祖先元素。
@@ -162,18 +164,18 @@
 
     ```css
     .clearfix::before,.clearfix:after{  
-        display:block;
-        content: “.”;
-        visibility:hidden;
-        height:0;
-        clear:both;
-        *zoom:1; //触发 IE layout
+        display:block;
+        content: “.”;
+        visibility:hidden;
+        height:0;
+        clear:both;
+        *zoom:1; //触发 IE layout
     }
     ```
 
 ### JavaScript
 
-1.  String 对象的 api
+1. String 对象的 api
 
 2. Array 对象的 api
 
@@ -203,7 +205,7 @@
 
       function sub(){
 
-          super.apply(this,arguments);
+          super.apply(this,arguments);
 
       }
 
@@ -401,8 +403,6 @@
 
 6. 用过 $.Deferred()  吗？
 
-   
-
 ### 浏览器
 
 1. 常见的浏览器内核有哪些？
@@ -529,13 +529,13 @@
 
       定位体系和浮动
 
-   -  **JS 解释引擎**
+   - **JS 解释引擎**
 
-      JS 预处理（变量提升、分号补全）
+     JS 预处理（变量提升、分号补全）
 
-      JS 执行
+     JS 执行
 
-      执行上下文，执行堆栈概念（如全局上下文，当前活动上下文）
+     执行上下文，执行堆栈概念（如全局上下文，当前活动上下文）
 
      VO（变量对象）和AO（活动对象）
 
@@ -549,7 +549,7 @@
 
       引用计数  
 
-    原文链接：[https://mp.weixin.qq.com/s/qMsf4DcMhn2cf0fXC-PLVA](https://mp.weixin.qq.com/s/qMsf4DcMhn2cf0fXC-PLVA)
+     原文链接：[https://mp.weixin.qq.com/s/qMsf4DcMhn2cf0fXC-PLVA](https://mp.weixin.qq.com/s/qMsf4DcMhn2cf0fXC-PLVA)
 
 3. 如何解决浏览器跨域问题？
 
@@ -561,17 +561,17 @@
 
    答：根实例创建之前会调用很多方法（钩子函数），
 
-   [beforeCreate]  // 该阶段还什么都没有，一般不会用到
+   [beforeCreate]  // 该阶段还什么都没有，一般不会用到，数据未加载
 
-   [created]  // 发送 ajax ，做初始化操作，该阶段 data 和 methods 已经被注入
+   [created]  // 发送 ajax ，在实例创建、数据加载后，已初始化数据，DOM 渲染之前执行。
 
-   [beforeMount]  // 执行该函数之前需先检查有无 el 元素和 template, 二者均存在才进入该函数，没有什么实际意义
+   [beforeMount]  // 执行该函数之前需先检查有无 el 元素和 template, 二者均存在才进入该函数，没有什么实际意义。虚拟 DOM 已创建完成，在数据渲染前最后一次更改数据。
 
-   [mounted] // 真是DOM 渲染完了，可以操作 dom 了
+   [mounted] // 真实DOM 渲染完了，可以操作 dom 了
 
-   [beforeUpdate] // 数据发生变化即可出发，一般使用 watch 替代该方法
+   [beforeUpdate] // 数据发生变化即可出发，一般使用 watch 替代该方法，重新渲染之前触发。
 
-   [updated] // 数据变化后执行
+   [updated] // 数据变化后执行，数据已经更改完成，DOM 也重新 render 完成，在该方法中更改数据会陷入死循环。
 
    [beforeDestroy] // 销毁之前可以清除定时器、解绑事件
 
@@ -599,124 +599,152 @@
 
    每个组件实例都有相应的 watcher 程序实例，它会在组件渲染的过程中把属性记录为依赖，当依赖项的 setter 被调用时，会通知 watcher 重新计算，从而使关联组件得以更新。
 
+   vue 实现数据双向绑定主要是：采用数据劫持结合“发布者 - 订阅者”模式的方式，通过 `Object.defineProperty()` 来劫持各个属性的 `setter`、 `getter`，在数据变动时发布消息给订阅者，触发相应监听回调。
+
 6. Vue-Router的工作原理。
 
    答：两种方式，hash/history/abstract
 
-7. 如何使用Vuex进行跨组件状态管理
+   hash 实现原理是 window 上的 onhashchange 事件。hash 模式的优点是 hash 出现在 URL 中，但是不会被包括在 HTTP 请求中，对后端没有影响，不会重新加载页面。hash 模式下，仅 hash符号之前的url会被包含在请求中，后端如果没有做到对路由的全覆盖，也不会返回404错误。
+
+   history 模式利用了H5 history interface 中新增的 pushState() 和 replaceState() 方法。这两个方法应用于浏览器的历史记录栈，提供了修改历史记录的功能，但是修改后的URL不会立即向后台发送请求。而且需要后台配置支持。缺点是路由不存在时会返回 404 。
+
+   history 模式下 URL 与当前 URL 相同时也会添加在历史记录中， hash 则只添加与当前不同的 URL。
+
+7. $nextTick 一般在什么时候用？
+
+   答：mounted 中需要获取 DOM 内容或操作 DOM 时使用。由于 Mounted 钩子函数是同步的，但是 DOM 渲染与数据挂载是异步的，因此如果想要获得真实的DOM，需要在$nextTick 中操作，即等待页面渲染完毕。
+
+   `$nextTick` 是在下次 DOM 更新循环结束之后执行延迟回调，在修改数据之后使用 `$nextTick`，则可以在回调中获取更新后的 DOM。
+
+8. 如何使用Vuex进行跨组件状态管理
 
    服务端渲染（如Vue SSR），首屏直出当然是最理想的方案。
 
-8. 如何实现 MVVM？
+9. 计算属性 computed 和事件 methods 有什么区别
 
-   答：Vue 三要素：
+   答：computed：计算属性是基于它们的依赖进行缓存的，只有在它的相关依赖发生改变时才会重新求值。
 
-   - **响应式**：Vue 如何监听到 data 的每个属性的变化；
+   method：只要发生重新渲染， method 调用总会执行该函数。
 
-   - **模板引擎**：Vue 的模板如何被解析，指令如何处理；
+10. Vue 中 key 的作用
 
-   - **渲染**：Vue 的模板如何渲染成 HTML，以及渲染过程。
+    答：`key` 的特殊属性主要用在 Vue 的虚拟 DOM 算法，在新旧 `nodes` 对比时辨识 `VNodes`。如果不使用 `key`，Vue 会使用一种最大限度减少动态元素并且尽可能的尝试修复/再利用相同类型元素的算法。使用 `key`，它会基于 `key` 的变化重新排列元素顺序，并且会移除 `key` 不存在的元素。
 
-   **什么是响应式**
+    有相同父元素的子元素必须有独特的 `key`。重复的 `key` 会造成渲染错误。
 
-   Object.DefineProperty()
+11. 如何实现 MVVM？
 
-   **Vue 如何解析模板**
+    答：Vue 三要素：
 
-   模板的本质是字符串，但最终要转换成 js ，因为模板中有逻辑指令。因此，模板最终会转换为 render 函数，所有信息都包含在 render 函数中。
+    - **响应式**：Vue 如何监听到 data 的每个属性的变化；
 
-   [render] 函数主要使用 [with] 语法实现。
+    - **模板引擎**：Vue 的模板如何被解析，指令如何处理；
 
-   ```javascript
-   with(this){   // this：vm
-       return _c(
-       'div',
-       {
-           attrs:{"id","app"}
-       },
-       [
-           _c('p',[_v(_s(price))])
-       ])
-   }
-   //vm._c
-   ƒ (a, b, c, d) { return createElement(vm, a, b, c, d, false); }
-   
-   //vm._v
-   ƒ createTextVNode (val) {
-     return new VNode(undefined, undefined, undefined, String(val))
-   }
-   
-   //vm._s
-   ƒ toString (val) {
-     return val == null? '': typeof val === 'object'? JSON.stringify(val, null,2): String(val)
-   }
-   funciton updateComponent() {
-       //vm._render即上面的render函数，返回vnode
-       vm._update(vm._render())
-   }
-   ```
+    - **渲染**：Vue 的模板如何渲染成 HTML，以及渲染过程。
 
-   render 函数执行之后返回的是 vnode 。
+    **什么是响应式**
 
-   vm.\_update()、updateComponent 
+    Object.DefineProperty()
 
-   - `updateComponent`中实现了`vdom`的`patch`
+    **Vue 如何解析模板**
 
-   - 页面首次渲染执行`updateComponent`
+    模板的本质是字符串，但最终要转换成 js ，因为模板中有逻辑指令。因此，模板最终会转换为 render 函数，所有信息都包含在 render 函数中。
 
-   - `data` 中每次修改属性，执行`updataCommponent`
+    [render] 函数主要使用 [with] 语法实现。
 
-   **Vue 的实现流程**
+    ```javascript
+    with(this){   // this：vm
+        return _c(
+        'div',
+        {
+            attrs:{"id","app"}
+        },
+        [
+            _c('p',[_v(_s(price))])
+        ])
+    }
+    //vm._c
+    ƒ (a, b, c, d) { return createElement(vm, a, b, c, d, false); }
+    
+    //vm._v
+    ƒ createTextVNode (val) {
+      return new VNode(undefined, undefined, undefined, String(val))
+    }
+    
+    //vm._s
+    ƒ toString (val) {
+      return val == null? '': typeof val === 'object'? JSON.stringify(val, null,2): String(val)
+    }
+    funciton updateComponent() {
+        //vm._render即上面的render函数，返回vnode
+        vm._update(vm._render())
+    }
+    ```
 
-   > 第一步，解析模板成 render 函数  
+    render 函数执行之后返回的是 vnode 。
 
-   - with的用法
+    vm.\_update()、updateComponent 
 
-   - 模板中所有的信息都被`render`函数包含
+    - `updateComponent`中实现了`vdom`的`patch`
 
-   - 模板中用到的`data`中的属性，都变成了js变量
+    - 页面首次渲染执行`updateComponent`
 
-   - 模板中的`v-model`、`v-if`、`v-on`都变成了js逻辑
+    - `data` 中每次修改属性，执行`updataCommponent`
 
-   - render函数返回vnode化 
+    **Vue 的实现流程**
 
-   > 第二步，响应式监听
+    > 第一步，解析模板成 render 函数  
 
-   - Object.defineProperty
+    - with的用法
 
-   - 将 data 属性代理到 vm 上
+    - 模板中所有的信息都被`render`函数包含
 
-   > 第三步：首次渲染，显示页面，且绑定依赖
+    - 模板中用到的`data`中的属性，都变成了js变量
 
-   - 初次渲染，执行 updateaComponent，执行 vm._render()
+    - 模板中的`v-model`、`v-if`、`v-on`都变成了js逻辑
 
-   - 执行 render 函数，会访问到 vm.list 和 vm.title
+    - render函数返回vnode化 
 
-   - 会被响应式的 get 方法监听到(为什么监听get？直接监听set不就行了吗？)
+    > 第二步，响应式监听
 
-   - data 中有很多属性，有些会被用到，有些可能不会被用到
+    - Object.defineProperty
 
-   - 被用到的会走到 get ，不被用到的不会走 get
+    - 将 data 属性代理到 vm 上
 
-   - 未走到 get 中的属性，set 的时候我们也无需关系
+    > 第三步：首次渲染，显示页面，且绑定依赖
 
-   - 避免不必要的重复渲染
+    - 初次渲染，执行 updateaComponent，执行 vm._render()
 
-   - 执行updateComponent，会走到 vdom 的 patch 方法
+    - 执行 render 函数，会访问到 vm.list 和 vm.title
 
-   -  patch 将 vnode 渲染成 DOM，初次渲染完成
+    - 会被响应式的 get 方法监听到(为什么监听get？直接监听set不就行了吗？)
 
-   > data 属性变化，触发 rerender
+    - data 中有很多属性，有些会被用到，有些可能不会被用到
 
-   - 属性修改，被响应式的 set 监听到
+    - 被用到的会走到 get ，不被用到的不会走 get
 
-   - set 中执行 updateComponent 
+    - 未走到 get 中的属性，set 的时候我们也无需关系
 
-   - updateComponent 重新执行 vm.\_render()
+    - 避免不必要的重复渲染
 
-   - 生成的 vnode 和 pervNode ， 通过 patch 进行对比
+    - 执行updateComponent，会走到 vdom 的 patch 方法
 
-   - 渲染到 html 中
+    - patch 将 vnode 渲染成 DOM，初次渲染完成
+
+    > data 属性变化，触发 rerender
+
+    - 属性修改，被响应式的 set 监听到
+
+    - set 中执行 updateComponent 
+
+    - updateComponent 重新执行 vm.\_render()
+
+    - 生成的 vnode 和 pervNode ， 通过 patch 进行对比
+
+    - 渲染到 html 中
+
+12. `method`：只要发生重新渲染， `method` 调用总会执行该函数。
 
 ### 前端工程化
 
@@ -764,39 +792,99 @@
 
    常见 **Plugin**：
 
+   [webpack-bundle-analyzer]
+
+   [webpack-dev-server]
+
+   [webpack-merge] //合并公共的配置文件
+
+   [copy-webpack-plugin] //拷贝文件
+
    [VuelLoaderPlugin]
 
-   [CleanWebpackPlugin]
+   [CleanWebpackPlugin] //清除 webpack 打包文件
 
    [HtmlWebpackPlugin] // 依据一个简单的index.html模板，生成一个自动引用你打包后的JS文件的新index.html。
 
+   两个作用：
+
+   - 为html文件中引入的外部资源如script、link动态添加每次compile后的hash，防止引用缓存的外部文件问题
+
+   - 可以生成创建html入口文件，比如单页面可以生成一个html文件入口，配置N个html-webpack-plugin可以生成N个页面入口
+
+   [webpack-dev-server]  //使用它可以为webpack打包生成的资源文件提供web服务。
+
+   主要作用：
+
+   - 为静态文件提供服务
+
+   - 自动刷新和热替换（HMR）
+
    [HotModuleReplacementPlugin] //允许你在修改组件代码后，自动刷新实时预览修改后的效果。
 
-   [extract-text-webpack-plugin]
+   [extract-text-webpack-plugin] //该插件的主要是为了抽离css样式,防止将样式打包在js中引起页面样式加载错乱的现象。webpack 4.X 已经不支持该插件了，使用 mini-css-extract-plugin 插件替代。
 
-   [UglifyJsPlugin] // 压缩 js 文件
+   [mini-css-extract-plugin] //
 
-   [ExtractTextPlugin] // 分离 css 和 js 文件
+   [media-query-plugin]
 
-2. Webpack热更新实现原理?
+   [UglifyJsPlugin] // 用来对js文件进行压缩，从而减小js文件的大小，加速load速度。
 
-   答:  
+   
 
-3. css-loader 的原理
+2. Webpack热更新实现原理? 
+
+   答:  webapck在编译的过程中，将HMR Runtime嵌入到bundle中；编译结束后，webpack对项目代码文件进行监视，发现文件变动重新编译变动的模块，同时通知HMR Runtime，然后HMR Runtime加载变动的模块文件，尝试执行热更新操作。更新的逻辑是：先检查模块是否能支持accept方法，不支持的话，则冒泡查找模块树的父节点，直到入口模块，accept方法也就是模块hot-replace的handler。
+
+   webpack-dev-server 的自动刷新和模块热替换机制
+
+   从外部角度看——自动刷新
+
+   当我们对业务代码做了一些修改然后保存后（command+s），页面会自动刷新，我们所做的修改会直接同步到页面上，而不需要我们刷新页面，或重新开启服务；
+
+   从内部角度看——模块热替换
+
+   在热替换（HMR）机制里，不是重载整个页面，HMR程序会只加载被更新的那一部分模块，然后将其注入到运行中的APP中。
+
+   **webpack-dev-server有两种模式可以实现自动刷新和模块热替换机制**
+
+   1. Iframe mode(默认,无需配置)
+
+      页面被嵌入在一个iframe里面，并且在模块变化的时候重载页面
+
+   2. inline mode（需配置）添加到bundle.js中
+
+      当刷新页面的时候，一个小型的客户端被添加到webpack.config.js的入口文件中，此时需要做两个配置：
+
+      - 在配置中写入 devServer.hot : true 和 devServer.inline : true
+
+      - 增加一个插件配置 webpack.HotModuleReplacementPlugin()
+
+   
+
+3. hash 和 chunkhash 的区别？
+
+   答：hash 是工程级别的，项目里任何一个文件发生变化，所有文件的 hash 码全部更新，并且 hash 码全都一样，如果项目很大的时候会非常不方便，用户体验不好。一般在 output 的filename 中使用 hash。
+
+   chunkhash 是文件级别的，如果修改了项目中的一个文件，那么只有这个文件和与这个文件相关联的打包文件的hash 发生变化，其他文件的 hash 码不变。一般在 output 的chunkFilename 中使用它。
+
+   contenthash 在 css 分离的时候使用 contenthash 。 js文件里引用了css（less，scss也是同理），这时候需要用contenthash，以保证css文件修改后，打包过后的hash码变化。
+
+4. css-loader 的原理
 
    答：loader的原理就是 export 导出函数，解析css 文件中的代码
 
-4. webpack 如何全局引用 jQuery
+5. webpack 如何全局引用 jQuery
 
    答：先把jQuery对象声明成为全局变量`jQuery`，再通过管道进一步又声明成为全局变量`$`。
 
-5. loader 和 plugin 有什么区别？
+6. loader 和 plugin 有什么区别？
 
    答：
 
    loader：用于对模块源码的转换，loader 描述了 webpack 如何处理非 JavaScript 模块，并且在 bundle 中引入这些依赖。Loader 可以将不同的语言（如 TypeScript）转换为 JavaScript，或者将内联图像转换为 dataURL。任何开发技术栈都可以使用 webpack。
 
-   Plugin： 目的在于解决 loader 无法实现的其他事，从打包优化和压缩，到重新定义环境变量，功能强大到可以处理各种各样的任务。Webpack提供了很多开箱即用的插件：CommonChunkPlugin主要用于提取第三方库和公共模块，避免首屏加载的bundle文件，或者按需加载的bundle文件体积过大，导致加载时间过长，是一把优化的利器。而在多页面应用中，更是能够为每个页面间的应用程序共享代码创建bundle。
+   Plugin： 用于扩展webpack的功能，目的在于解决 loader 无法实现的其他事，从打包优化和压缩，到重新定义环境变量，功能强大到可以处理各种各样的任务，各种各样的plugin几乎可以让webpack做任何与构建先关的事情。Webpack提供了很多开箱即用的插件：CommonChunkPlugin主要用于提取第三方库和公共模块，避免首屏加载的bundle文件，或者按需加载的bundle文件体积过大，导致加载时间过长，是一把优化的利器。而在多页面应用中，更是能够为每个页面间的应用程序共享代码创建bundle。
 
    Mode：可以在 config 文件里面配置，也可以在 CLI 参数中配置：webpack --mode=production（一般会选择在CLI，也就是npm scripts里面进行配置）。
 
