@@ -1,34 +1,31 @@
 /**
  * 节流函数 Throttle
+ * 应用场景：scroll 事件；
  * @param fun 事件触发的操作
- * @param interval 间隔多少毫秒需要触发一次事件
+ * @param duration 间隔多少毫秒需要触发一次事件
  */
-function Throttle(fun,interval){
-	let timer,
-		args = arguments,
-		start;
-	return function Loop(){
+function Throttle(fun,duration){
+	let args = arguments, timer,
+		start = new Date; // 初始化就开始计时，保证页面加载完后可以立即执行第一次
+	return function(){
 		let self = this;
-		let now = Date.now();
-		if(!start){
-			start = now;
-		}
-		
-		if(timer){
-			clearTimeout(timer);
-		}
-		
-		if(now - start >= interval){
-			fun.apply(self,args);
+		let remainTime = duration - (new Date - start);
+		timer && clearTimeout(timer);
+		if(remainTime <= 0){
+			fun.apply(self, args);
 			start = now;
 		}else{
-			timer = setTimeout(()=>Loop.apply(self,args), 50);
+			// 让方法在脱离事件后也能执行一次
+			timer = setTimeout(()=> {
+				fun.apply(self,args)
+			}, remainTime);
 		}
 	}
 }
 
 /**
  * 防抖函数 Debounce
+ * 应用场景：提交按钮点击事件；inputChange 事件
  * @param fun 事件触发的操作
  * @param delay 多少毫秒内连续触发事件，不会执行
  * @returns {Function}

@@ -6,11 +6,9 @@
 
    答：
 
-   （1）、<!DOCTYPE>声明位于HTML文档中的第一行，处于 <html> 标签之前。告知浏览器的解析器用什么文档标准解析这个文档。DOCTYPE不存在或格式不正确会导致文档以兼容模式呈现。
+   （1）<!DOCTYPE>声明位于HTML文档中的第一行，处于 <html> 标签之前。告知浏览器的解析器用什么文档标准解析这个文档。DOCTYPE不存在或格式不正确会导致文档以兼容模式呈现。
 
-   （2）、标准模式的排版  和JS运作模式都是以该浏览器支持的最高标准运行。在兼容模式中，页面以宽松的向后兼容的方式显示,模拟老式浏览器的行为以防止站点无法工作。
-
-   # 
+   （2）标准模式的排版和JS运作模式都是以该浏览器支持的最高标准运行。在兼容模式中，页面以宽松的向后兼容的方式显示,模拟老式浏览器的行为以防止站点无法工作。 
 
 2. H5的新特性有哪些？移除了哪些？如何与 HTML 区分？
 
@@ -830,8 +828,6 @@
 
    [UglifyJsPlugin] // 用来对js文件进行压缩，从而减小js文件的大小，加速load速度。
 
-   
-
 2. Webpack热更新实现原理? 
 
    答:  webapck在编译的过程中，将HMR Runtime嵌入到bundle中；编译结束后，webpack对项目代码文件进行监视，发现文件变动重新编译变动的模块，同时通知HMR Runtime，然后HMR Runtime加载变动的模块文件，尝试执行热更新操作。更新的逻辑是：先检查模块是否能支持accept方法，不支持的话，则冒泡查找模块树的父节点，直到入口模块，accept方法也就是模块hot-replace的handler。
@@ -859,8 +855,6 @@
       - 在配置中写入 devServer.hot : true 和 devServer.inline : true
 
       - 增加一个插件配置 webpack.HotModuleReplacementPlugin()
-
-   
 
 3. hash 和 chunkhash 的区别？
 
@@ -970,7 +964,9 @@
 
    3次握手示意图如下：
 
-   ![三次握手](https://images2015.cnblogs.com/blog/880287/201608/880287-20160803151722918-1174987329.png)
+   ![C:\Users\maomaoYang\Desktop\TCP的三次握手](C:\Users\maomaoYang\Desktop\TCP的三次握手.png)
+
+   三次握手
 
    四次挥手**内容**：
 
@@ -996,7 +992,7 @@
 
    4次挥手示意图：
 
-   ![四次挥手](https://images2015.cnblogs.com/blog/880287/201608/880287-20160803151839997-1733921141.jpg)
+   ![C:\Users\maomaoYang\Desktop\TCP的四次挥手](C:\Users\maomaoYang\Desktop\TCP的四次挥手.jpg)
 
    **状态迁移过程：**
 
