@@ -1,0 +1,39 @@
+使用 async/await 实现一个 Sleep 函数
+使用 Proxy 实现一个观察者模式
+
+
+7.13 小米电话面试
+垂直居中
+margin的百分比是相对于父容器的，tranform的百分比是相对于自身的
+flex 的属性 justify-content，align-items
+是否使用 less
+
+判断是否是空对象？有几种方法
+JSON.stringify()有什么缺点，Object.keys(),
+其他遍历Object对象的属性有哪些？for...in, 区别是啥？是否遍历原型上的属性。
+
+箭头函数 this 指向问题？
+是否可以apply/bind 修改？是否可以用于构造函数？
+
+
+js的继承与ES6 的继承有什么区别？
+Class extends
+必须执行 super 构造函数
+原型链可以被继承，调用构造函数才能执行属性
+
+vue 的组件通信
+$on, $emit?是否已被新版本废弃？是否支持多级
+vue.Observable()新特性是否了解
+
+vue-router 的实现原理
+
+是否手动配置过 webpack 项目
+
+跨域是否了解
+
+浏览器缓存策略
+
+etag 和 last-mofified 哪个优先级更高
+
+
+

@@ -5,9 +5,8 @@
 function extendCopy(o){
 	var c = {};
 	for(var i in o){
-		c[i] = p[i];
+		c[i] = o[i];
 	}
-	c.uber = p;
 	return c;
 }
 
@@ -20,7 +19,7 @@ function deepCopy(p,c){
 	var c = c || {};
 	for(var i in p){
 		if(typeof p[i] === 'object'){
-			c[i] = (p[i].constructor === Array) ? [] : {};
+			c[i] = (p[i] instanceof Array) ? [] : {};
 			deepCopy(p[i], c[i]);
 		}else{
 			c[i] = p[i];

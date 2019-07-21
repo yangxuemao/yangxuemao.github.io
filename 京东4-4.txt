@@ -1,0 +1,50 @@
+1px的线条怎么画
+import 和 require 的区别（动态加载）
+
+float清除浮动
+
+postcss是否用过
+
+diff 算法是怎么实现非常高效的
+
+响应式布局的实现方式（rem）
+flex布局，float布局，
+
+移动端滚动条穿透
+tcp和udp的区别
+
+https是在哪一层加密的
+
+http/2 有哪些特性？双工复用是怎么实现的？
+
+webpack的原理是怎么实现的？
+手写一个
+vue跨组件通信方式有哪些？
+（inject）
+
+jq .extends 
+深拷贝
+链式调用怎么实现？
+
+vue为什么不支持ie9？
+
+polyfill和skem的区别
+vue中数据动态响应是如何实现数组的？
+
+常用的设计模式
+setTimeout,setInterval,requestFrameAnimation 作为微任务有什么区别？
+
+fetch和ajax有什么区别
+跨域 cors 
+如何实现
+图片格式,svg，mpeg有什么区别
+
+css2和css3的盒模型有啥区别
+
+清除浮动的方法
+
+常用的伪类和微元素，:active,:disable
+
+websocket, webworker
+
+移动端的组件库
